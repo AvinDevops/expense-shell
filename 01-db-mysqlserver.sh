@@ -21,10 +21,10 @@ fi
 VALIDATE(){
     if [ $? -ne 0 ]
     then 
-        echo -e "$R $2.... is FAILED $N"
+        echo -e "$Y $2.... is $N $R FAILED $N"
         exit 1
     else
-        echo -e "$G $2... is SUCCESS $N"
+        echo -e "$Y $2... is $N $R SUCCESS $N"
     fi
 }
 
