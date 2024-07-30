@@ -6,6 +6,10 @@ TIMESTAMP=$(date +%F-%H-%M-%S)
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOGFILE=/tmp/$SCRIPT_NAME-$TIMESTAMP.log
 
+#Entering password through prompt
+echo "please enter password:"
+read mysql_root_password
+
 #Assigning colors values to variables
 R="\e[31m"
 G="\e[32m"
@@ -41,5 +45,5 @@ VALIDATE $? "Enabling mysql service"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting mysql service"
 
-sudo mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+sudo mysql_secure_installation --set-root-pass ${$mysql_root_password} &>>$LOGFILE
 VALIDATE $? "Setting password for root"
