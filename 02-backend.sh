@@ -67,3 +67,24 @@ VALIDATE $? "Unzipping backend file"
 
 npm install &>>$LOGFILE
 VALIDATE $? "Installing dependencies"
+
+cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
+VALIDATE $? "Copying backend.service file"
+
+systemctl daemon-reload &>>$LOGFILE
+VALIDATE $? "Daemon reloading"
+
+systemctl start backend &>>$LOGFILE
+VALIDATE $? "Starting backed service"
+
+systemctl enable backend &>>$LOGFILE
+VALIDATE $? "Enabling backend service"
+
+dnf install mysql -y &>>$LOGFILE
+VALIDATE $? "Installing mysql client"
+
+mysql -h db.avinexpense.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOGFILE
+VALIDATE $? "Loading schema"
+
+systemctl restart backend &>>$LOGFILE
+VALIDATE $? "Restarting backend service"
