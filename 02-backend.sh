@@ -15,7 +15,7 @@ N="\e[0m"
 
 #Entering password through prompt
 echo "Please enter DB password:"
-read mysql_root_password
+read -s mysql_root_password
 
 #Checking root user or not!
 if [ $USERID -ne 0 ]
