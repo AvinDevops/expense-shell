@@ -10,14 +10,6 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-if [ $USERID -ne 0 ]
-then
-    echo -e "$R you are not root user, please access with root user $N"
-    exit 1
-else
-    echo -e "$G you are root user $N"
-fi
-
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
@@ -27,6 +19,16 @@ VALIDATE(){
         echo -e "$2... is $R SUCCESS $N"
     fi
 }
+
+if [ $USERID -ne 0 ]
+then
+    echo -e "$R you are not root user, please access with root user $N"
+    exit 1
+else
+    echo -e "$G you are root user $N"
+fi
+
+
 
 dnf install mysql-server -y &>>$LOGFILE
 VALIDATE $? "Installing mysql server"
