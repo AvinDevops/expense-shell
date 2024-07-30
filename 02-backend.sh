@@ -15,7 +15,7 @@ N="\e[0m"
 
 #Entering password through prompt
 echo "Please enter DB password:"
-read -s mysql_root_password
+read  mysql_root_password
 
 #Checking root user or not!
 if [ $USERID -ne 0 ]
@@ -87,7 +87,7 @@ VALIDATE $? "Enabling backend service"
 dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "Installing mysql client"
 
-mysql -h db.avinexpense.online -uroot -p{$mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+mysql -h db.avinexpense.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "Loading schema"
 
 systemctl restart backend &>>$LOGFILE
