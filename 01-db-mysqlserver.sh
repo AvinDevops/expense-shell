@@ -13,7 +13,7 @@ N="\e[0m"
 if [ $USERID -ne 0 ]
 then
     echo -e "$R you are not root user, please access with root user $N"
-    exit 0
+    exit 1
 else
     echo -e "$G you are root user $N"
 fi
