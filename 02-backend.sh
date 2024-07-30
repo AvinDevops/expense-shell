@@ -52,13 +52,18 @@ else
     echo -e "Already expense user added...$Y SKIPPNG $N"
 fi
 
-mkdir -p /app
+mkdir -p /app &>>$LOGFILE
+VALIDATE $? "Creating app directory"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILE
+VALIDATE $? "Downloading backend code"
 
 cd /app
 
+rm -rf /app/*
+
 unzip /tmp/backend.zip &>>$LOGFILE
+VALIDATE $? "Unzipping backend file"
 
 npm install &>>$LOGFILE
 VALIDATE $? "Installing dependencies"
