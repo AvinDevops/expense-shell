@@ -26,10 +26,10 @@ fi
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e "$R $2... is FAILED $N"
+        echo -e "$2... is $R FAILED $N"
         exit 1
     else
-        echo -e "$G $2... is SUCCESS $N"
+        echo -e "$2... is $G SUCCESS $N"
     fi
 }
 
@@ -43,5 +43,11 @@ VALIDATE $? "Enabling nodejs latest version"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing nodejs"
 
-useradd expense
-VALIDATE $? "Adding user expense"
+id expense
+if [ $? -ne 0 ]
+then
+    useradd expense
+    VALIDATE $? "Creating expense user"
+else
+    echo -e "Already expense user added...$Y SKIPPNG $N"
+fi
