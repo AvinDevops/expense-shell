@@ -43,7 +43,7 @@ VALIDATE $? "Enabling nodejs latest version"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing nodejs"
 
-id expense
+id expense &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     useradd expense
@@ -51,3 +51,14 @@ then
 else
     echo -e "Already expense user added...$Y SKIPPNG $N"
 fi
+
+mkdir /app
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILE
+
+cd /app
+
+unzip /tmp/backend.zip &>>$LOGFILE
+
+npm install &>>$LOGFILE
+VALIDATE $? "Installing dependencies"
