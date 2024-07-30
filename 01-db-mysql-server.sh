@@ -12,15 +12,6 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-#Checking root user or not
-if [ $USERID -ne 0 ]
-then    
-    echo -e "$R you are not root user, please access with root user $N"
-    exit 0
-else
-    echo -e "you are root user"
-fi 
-
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
@@ -31,7 +22,17 @@ VALIDATE(){
     fi
 }
 
-dnf install mysqll-server -y &>>$LOGFILE
+#Checking root user or not
+if [ $USERID -ne 0 ]
+then    
+    echo -e "$R you are not root user, please access with root user $N"
+    exit 0
+else
+    echo -e "you are root user"
+fi 
+
+
+dnf install mysql-server -y &>>$LOGFILE
 VALIDATE $? "Installing mysql server"
 
 systemctl enable mysqld &>>$LOGFILE
