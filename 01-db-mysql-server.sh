@@ -45,5 +45,5 @@ VALIDATE $? "Enabling mysql service"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting mysql service"
 
-sudo mysql_secure_installation --set-root-pass ${$mysql_root_password} &>>$LOGFILE
+sudo mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
 VALIDATE $? "Setting password for root"
