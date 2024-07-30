@@ -7,8 +7,8 @@ SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOGFILE=/tmp/$SCRIPT_NAME-$TIMESTAMP.log
 
 #Entering password through prompt
-#echo "please enter password:"
-#read mysql_root_password
+echo "please enter password:"
+read mysql_root_password
 
 #Assigning colors values to variables
 R="\e[31m"
@@ -45,5 +45,15 @@ VALIDATE $? "Enabling mysql service"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting mysql service"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-VALIDATE $? "Setting password for root"
+#mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+#VALIDATE $? "Setting password for root"
+
+mysql -h 172.31.36.19 -uroot -p${mysql_root_password} -e 'show databases;'
+if [ $? -ne 0 ]
+then
+    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+    VALIDATE $? "Setting password for root"
+else
+    echo -e "Root password is already set... $Y SKIPPING $N"
+fi
+    
